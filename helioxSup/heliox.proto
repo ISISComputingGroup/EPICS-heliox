@@ -1,0 +1,61 @@
+ReadTimeout = 1000;
+WriteTimeout = 1000;
+ReplyTimeout = 1000;
+
+
+Terminator = LF;
+
+get_temp {
+    out "@1READ:DEV:HelioxX:HEL";
+	in "STAT:DEV:HelioxX:HEL"
+	   ":LOWT:%*fK"
+       ":BT:%*fK"
+       ":NVCN:%*fmB"
+       ":RCTD:%*fK"
+       ":RCST:%*fK"
+       ":NVHT:%*fmB"
+       ":RCTE:%*fK"
+       ":SRBH:%*fK"
+       ":PE:%*fK"
+       ":RGNA:%*fK"
+       ":PCT:%*fK"
+       ":SIG:H4PS:%*[^:]"
+       ":STAT:%*[^:]"
+       ":TEMP:%fK"
+       ":TSET:%*fK"
+       ":H3PS:%*[^:]"
+       ":SRBS:%*[^:]"
+       ":SRBR:%*fK"
+       ":SCT:%*fK"
+       ":NVLT:%*fmB"
+}
+
+set_temp {
+    out "@1SET:DEV:HelioxX:HEL:SIG:TSET:%fK";
+	in "%*s";
+}
+
+get_temp_sp_rbv {
+    out "@1READ:DEV:HelioxX:HEL";
+	in "STAT:DEV:HelioxX:HEL"
+	   ":LOWT:%*fK"
+       ":BT:%*fK"
+       ":NVCN:%*fmB"
+       ":RCTD:%*fK"
+       ":RCST:%*fK"
+       ":NVHT:%*fmB"
+       ":RCTE:%*fK"
+       ":SRBH:%*fK"
+       ":PE:%*fK"
+       ":RGNA:%*fK"
+       ":PCT:%*fK"
+       ":SIG:H4PS:%*[^:]"
+       ":STAT:%*[^:]"
+       ":TEMP:%*fK"
+       ":TSET:%fK"
+       ":H3PS:%*[^:]"
+       ":SRBS:%*[^:]"
+       ":SRBR:%*fK"
+       ":SCT:%*fK"
+       ":NVLT:%*fmB"
+}

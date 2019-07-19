@@ -1,0 +1,81 @@
+record(bo, "$(P)SIM")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(ZNAM, "NO")
+    field(ONAM, "YES")
+    field(VAL, "$(RECSIM=0)")
+    field(PINI, "YES")
+}
+
+record(bo, "$(P)DISABLE")
+{
+    field(DESC, "Disable comms")
+    field(PINI, "YES")
+    field(VAL, "$(DISABLE=0)")
+    field(OMSL, "supervisory")
+    field(ZNAM, "COMMS ENABLED")
+    field(ONAM, "COMMS DISABLED")
+}
+
+record(ai, "$(P)TEMP")
+{
+    field(DESC, "Temperature")
+    field(DTYP, "stream")
+    field(INP, "@heliox.proto get_temp $(PORT)")
+    field(SCAN, "1 second") 
+	field(PREC, "3")
+	field(EGU, "K")
+	
+	info(INTEREST, "HIGH")
+	info(archive, "VAL")
+	
+	field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TEMP")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ao, "$(P)TEMP:SP")
+{
+    field(DESC, "Temperature")
+    field(DTYP, "stream")
+    field(OUT, "@heliox.proto set_temp $(PORT)")
+	field(PREC, "3")
+	field(EGU, "K")
+	
+	info(INTEREST, "HIGH")
+	info(archive, "VAL")
+	
+	field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TEMP:SP")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ai, "$(P)TEMP:SP:RBV")
+{
+    field(DESC, "Temperature")
+    field(DTYP, "stream")
+    field(INP, "@heliox.proto get_temp_sp_rbv $(PORT)")
+    field(SCAN, "1 second") 
+	field(PREC, "3")
+	field(EGU, "K")
+	
+	info(INTEREST, "HIGH")
+	info(archive, "VAL")
+	
+	field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TEMP:SP:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+
+
+
+# Simulation records
+
+record(ao, "$(P)SIM:TEMP")
+{
+}
+
+alias("$(P)SIM:TEMP", "$(P)SIM:TEMP:SP")
+alias("$(P)SIM:TEMP", "$(P)SIM:TEMP:SP:RBV")
