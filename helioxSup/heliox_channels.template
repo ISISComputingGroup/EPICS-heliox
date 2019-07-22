@@ -2,7 +2,7 @@ record(ai, "$(P)$(NAME):TEMP")
 {
     field(DESC, "Temperature")
     field(DTYP, "stream")
-    field(INP, "@heliox.proto get_temp_$(NAME) $(PORT)")
+    field(INP, "@$(PROTO) get_temp_$(NAME) $(PORT)")
     field(SCAN, "1 second") 
 	field(PREC, "3")
 	field(EGU, "K")
@@ -11,7 +11,7 @@ record(ai, "$(P)$(NAME):TEMP")
 	info(archive, "VAL")
 	
 	field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:TEMP")
+    field(SIOL, "$(P)SIM:$(NAME):TEMP")
     field(SDIS, "$(P)DISABLE")
 }
 
@@ -19,7 +19,7 @@ record(ai, "$(P)$(NAME):TEMP:SP:RBV")
 {
     field(DESC, "Temperature")
     field(DTYP, "stream")
-    field(INP, "@heliox.proto get_temp_sp_rbv_$(NAME) $(PORT)")
+    field(INP, "@$(PROTO) get_temp_sp_$(NAME) $(PORT)")
     field(SCAN, "1 second") 
 	field(PREC, "3")
 	field(EGU, "K")
@@ -28,9 +28,12 @@ record(ai, "$(P)$(NAME):TEMP:SP:RBV")
 	info(archive, "VAL")
 	
 	field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:TEMP:SP:RBV")
+    field(SIOL, "$(P)SIM:$(NAME):TEMP:SP:RBV")
     field(SDIS, "$(P)DISABLE")
 }
+
+# Cannot set the individual channels so just alias to sp rbv
+alias("$(P)$(NAME):TEMP:SP:RBV", "$(P)$(NAME):TEMP:SP")
 
 
 
@@ -41,5 +44,5 @@ record(ao, "$(P)SIM:$(NAME):TEMP")
 {
 }
 
-alias("$(P)SIM:TEMP", "$(P)SIM:$(NAME):TEMP:SP")
-alias("$(P)SIM:TEMP", "$(P)SIM:$(NAME):TEMP:SP:RBV")
+alias("$(P)SIM:$(NAME):TEMP", "$(P)SIM:$(NAME):TEMP:SP")
+alias("$(P)SIM:$(NAME):TEMP", "$(P)SIM:$(NAME):TEMP:SP:RBV")

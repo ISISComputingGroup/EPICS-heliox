@@ -5,6 +5,8 @@ ReplyTimeout = 1000;
 
 Terminator = LF;
 
+# Read variables that come from the top-level "HelioxX" interface.
+
 get_temp {
     out "READ:DEV:HelioxX:HEL:SIG:TEMP";
     in "STAT:DEV:HelioxX:HEL:SIG:TEMP:%fK";
@@ -25,23 +27,47 @@ get_stability {
     in "STAT:DEV:HelioxX:HEL:SIG:H3PS:%[^:]";
 }
 
+# Read channel temperatures.
+
 get_temp_HE3SORB {
     out "READ:DEV:He3Sorb:TEMP:SIG:TEMP";
     in "STAT:DEV:He3Sorb:TEMP:SIG:TEMP:%fK";
 }
 
 get_temp_HE4POT {
-    out "READ:DEV:He3Sorb:TEMP:SIG:TEMP";
-    in "STAT:DEV:He3Sorb:TEMP:SIG:TEMP:%fK";
+    out "READ:DEV:He4Pot:TEMP:SIG:TEMP";
+    in "STAT:DEV:He4Pot:TEMP:SIG:TEMP:%fK";
 }
 
 get_temp_HELOW {
-    out "READ:DEV:He3Sorb:TEMP:SIG:TEMP";
-    in "STAT:DEV:He3Sorb:TEMP:SIG:TEMP:%fK";
+    out "READ:DEV:HeLow:TEMP:SIG:TEMP";
+    in "STAT:DEV:HeLow:TEMP:SIG:TEMP:%fK";
 }
 
 get_temp_HEHIGH {
-    out "READ:DEV:He3Sorb:TEMP:SIG:TEMP";
-    in "STAT:DEV:He3Sorb:TEMP:SIG:TEMP:%fK";
+    out "READ:DEV:HeHigh:TEMP:SIG:TEMP";
+    in "STAT:DEV:HeHigh:TEMP:SIG:TEMP:%fK";
+}
+
+# Read channel temperature setpoint readbacks.
+
+get_temp_sp_HE3SORB {
+    out "READ:DEV:He3Sorb:TEMP:LOOP:TSET";
+    in "STAT:DEV:He3Sorb:TEMP:LOOP:TSET:%fK";
+}
+
+get_temp_sp_HE4POT {
+    out "READ:DEV:He4Pot:TEMP:LOOP:TSET";
+    in "STAT:DEV:He4Pot:TEMP:LOOP:TSET:%fK";
+}
+
+get_temp_sp_HELOW {
+    out "READ:DEV:HeLow:TEMP:LOOP:TSET";
+    in "STAT:DEV:HeLow:TEMP:LOOP:TSET:%fK";
+}
+
+get_temp_sp_HEHIGH {
+    out "READ:DEV:HeHigh:TEMP:LOOP:TSET";
+    in "STAT:DEV:HeHigh:TEMP:LOOP:TSET:%fK";
 }
 
