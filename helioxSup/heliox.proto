@@ -6,56 +6,42 @@ ReplyTimeout = 1000;
 Terminator = LF;
 
 get_temp {
-    out "@1READ:DEV:HelioxX:HEL";
-	in "STAT:DEV:HelioxX:HEL"
-	   ":LOWT:%*fK"
-       ":BT:%*fK"
-       ":NVCN:%*fmB"
-       ":RCTD:%*fK"
-       ":RCST:%*fK"
-       ":NVHT:%*fmB"
-       ":RCTE:%*fK"
-       ":SRBH:%*fK"
-       ":PE:%*fK"
-       ":RGNA:%*fK"
-       ":PCT:%*fK"
-       ":SIG:H4PS:%*[^:]"
-       ":STAT:%*[^:]"
-       ":TEMP:%fK"
-       ":TSET:%*fK"
-       ":H3PS:%*[^:]"
-       ":SRBS:%*[^:]"
-       ":SRBR:%*fK"
-       ":SCT:%*fK"
-       ":NVLT:%*fmB"
+    out "READ:DEV:HelioxX:HEL:SIG:TEMP";
+    in "STAT:DEV:HelioxX:HEL:SIG:TEMP:%fK";
 }
 
 set_temp {
-    out "@1SET:DEV:HelioxX:HEL:SIG:TSET:%fK";
-	in "%*s";
+    out "SET:DEV:HelioxX:HEL:SIG:TSET:%fK";
+	in "STAT:DEV:HelioxX:HEL:SIG:TSET:%*fK";
 }
 
 get_temp_sp_rbv {
-    out "@1READ:DEV:HelioxX:HEL";
-	in "STAT:DEV:HelioxX:HEL"
-	   ":LOWT:%*fK"
-       ":BT:%*fK"
-       ":NVCN:%*fmB"
-       ":RCTD:%*fK"
-       ":RCST:%*fK"
-       ":NVHT:%*fmB"
-       ":RCTE:%*fK"
-       ":SRBH:%*fK"
-       ":PE:%*fK"
-       ":RGNA:%*fK"
-       ":PCT:%*fK"
-       ":SIG:H4PS:%*[^:]"
-       ":STAT:%*[^:]"
-       ":TEMP:%*fK"
-       ":TSET:%fK"
-       ":H3PS:%*[^:]"
-       ":SRBS:%*[^:]"
-       ":SRBR:%*fK"
-       ":SCT:%*fK"
-       ":NVLT:%*fmB"
+    out "READ:DEV:HelioxX:HEL:SIG:TSET";
+    in "STAT:DEV:HelioxX:HEL:SIG:TSET:%fK";
 }
+
+get_stability {
+    out "READ:DEV:HelioxX:HEL:SIG:H3PS";
+    in "STAT:DEV:HelioxX:HEL:SIG:H3PS:%[^:]";
+}
+
+get_temp_HE3SORB {
+    out "READ:DEV:He3Sorb:TEMP:SIG:TEMP";
+    in "STAT:DEV:He3Sorb:TEMP:SIG:TEMP:%fK";
+}
+
+get_temp_HE4POT {
+    out "READ:DEV:He3Sorb:TEMP:SIG:TEMP";
+    in "STAT:DEV:He3Sorb:TEMP:SIG:TEMP:%fK";
+}
+
+get_temp_HELOW {
+    out "READ:DEV:He3Sorb:TEMP:SIG:TEMP";
+    in "STAT:DEV:He3Sorb:TEMP:SIG:TEMP:%fK";
+}
+
+get_temp_HEHIGH {
+    out "READ:DEV:He3Sorb:TEMP:SIG:TEMP";
+    in "STAT:DEV:He3Sorb:TEMP:SIG:TEMP:%fK";
+}
+

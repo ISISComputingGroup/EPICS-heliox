@@ -1,0 +1,8 @@
+file heliox_channels.template {
+
+pattern {PORT, P, NAME}
+    {"\$(PORT)", "\$(P)", "HE3SORB"}
+    {"\$(PORT)", "\$(P)", "HE4POT"}
+    {"\$(PORT)", "\$(P)", "HELOW"}
+    {"\$(PORT)", "\$(P)", "HEHIGH"}
+}

@@ -22,7 +22,7 @@ record(ai, "$(P)TEMP")
 {
     field(DESC, "Temperature")
     field(DTYP, "stream")
-    field(INP, "@heliox.proto get_temp $(PORT)")
+    field(INP, "@$(PROTO) get_temp $(PORT)")
     field(SCAN, "1 second") 
 	field(PREC, "3")
 	field(EGU, "K")
@@ -39,7 +39,7 @@ record(ao, "$(P)TEMP:SP")
 {
     field(DESC, "Temperature")
     field(DTYP, "stream")
-    field(OUT, "@heliox.proto set_temp $(PORT)")
+    field(OUT, "@$(PROTO) set_temp $(PORT)")
 	field(PREC, "3")
 	field(EGU, "K")
 	
@@ -55,7 +55,7 @@ record(ai, "$(P)TEMP:SP:RBV")
 {
     field(DESC, "Temperature")
     field(DTYP, "stream")
-    field(INP, "@heliox.proto get_temp_sp_rbv $(PORT)")
+    field(INP, "@$(PROTO) get_temp_sp_rbv $(PORT)")
     field(SCAN, "1 second") 
 	field(PREC, "3")
 	field(EGU, "K")
@@ -68,7 +68,16 @@ record(ai, "$(P)TEMP:SP:RBV")
     field(SDIS, "$(P)DISABLE")
 }
 
-
+record(stringin, "$(P)STABILITY")
+{
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) get_stability $(PORT)")
+    field(SCAN, "1 second")
+	
+	field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:STABILITY")
+    field(SDIS, "$(P)DISABLE")
+}
 
 
 # Simulation records
@@ -79,3 +88,8 @@ record(ao, "$(P)SIM:TEMP")
 
 alias("$(P)SIM:TEMP", "$(P)SIM:TEMP:SP")
 alias("$(P)SIM:TEMP", "$(P)SIM:TEMP:SP:RBV")
+
+record(stringout, "$(P)SIM:STABILITY") {
+    field(VAL, "Stable")
+	field(PINI, "YES")
+}
