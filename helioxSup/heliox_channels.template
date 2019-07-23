@@ -61,6 +61,19 @@ record(bi, "$(P)$(NAME):HEATER:AUTO")
     field(SDIS, "$(P)DISABLE")
 }
 
+record(ai, "$(P)$(NAME):HEATER:PERCENT")
+{
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) get_chan_heater_percent($(PROTOCOL_NAME)) $(PORT)")
+    field(SCAN, "1 second")
+    field(EGU, "%")
+    field(PREC, "2")
+	
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:$(NAME):HEATER:PERCENT")
+    field(SDIS, "$(P)DISABLE")
+}
+
 
 
 # Simulation records
@@ -71,6 +84,8 @@ record(ao, "$(P)SIM:$(NAME):TEMP")
 
 alias("$(P)SIM:$(NAME):TEMP", "$(P)SIM:$(NAME):TEMP:SP")
 alias("$(P)SIM:$(NAME):TEMP", "$(P)SIM:$(NAME):TEMP:SP:RBV")
+
+record(ao, "$(P)SIM:$(NAME):HEATER:PERCENT") {}
 
 record(stringout, "$(P)SIM:$(NAME):STABILITY") {
     field(VAL, "Stable")

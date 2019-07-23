@@ -42,6 +42,11 @@ get_chan_heater_auto {
     in "STAT:DEV:\$1:TEMP:LOOP:ENAB:%{OFF|ON}";
 }
 
+get_chan_heater_percent {
+    out "READ:DEV:\$1:TEMP:LOOP:HSET";
+    in "STAT:DEV:\$1:TEMP:LOOP:HSET:%f";
+}
+
 # Channel stabilities
 
 get_stability_HE3SORB {

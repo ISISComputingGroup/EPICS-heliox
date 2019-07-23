@@ -216,6 +216,45 @@ get_chan_heater_auto {
        ":SLOP:%*fO/K";
 }
 
+get_chan_heater_percent {
+    out "READ:DEV:\$1:TEMP";
+    in "STAT:DEV:\$1:TEMP"
+       ":EXCT:TYPE:%*[^:]"
+	   ":MAG:%*f"
+       ":STAT:%*f"
+       ":NICK:%*[^:]"
+       ":LOOP:AUX:%*[^:]"
+       ":D:%*f"
+       ":HTR:%*[^:]"
+       ":I:%*f"
+       ":THTF:%*[^:]"
+       ":HSET:%f"
+       ":PIDT:%*[^:]"
+       ":ENAB:%*[^:]"
+       ":SWFL:%*[^:]"
+       ":FAUT:%*[^:]"
+       ":FSET:%*f"
+       ":PIDF:%*[^:]"
+       ":P:%*f"
+       ":SWMD:%*[^:]"
+       ":TSET:%*fK"
+       ":MAN:HVER:%*f"
+       ":FVER:%*f"
+       ":SERL:%*f"
+       ":CAL:OFFS:%*f"
+       ":COLDL:%*fK"
+       ":INT:LIN:SCAL:%*f"
+       ":FILE:%*[^:]"
+       ":HOTL:%*fK"
+       ":TYPE:%*[^:]"
+       ":SIG:VOLT:%*fmV"
+       ":CURR:%*fA"
+       ":TEMP:%*fK"
+       ":POWR:%*fW"
+       ":RES:%*fO"
+       ":SLOP:%*fO/K";
+}
+
 # Channel stabilities
 
 get_stability_HE3SORB {
