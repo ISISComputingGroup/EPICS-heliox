@@ -1,6 +1,6 @@
 record(ai, "$(P)$(NAME):TEMP")
 {
-    field(DESC, "Temperature")
+    field(DESC, "$(NAME) Temperature")
     field(DTYP, "stream")
     field(INP, "@$(PROTO) get_chan_temp($(PROTOCOL_NAME)) $(PORT)")
     field(SCAN, "1 second") 
@@ -17,14 +17,13 @@ record(ai, "$(P)$(NAME):TEMP")
 
 record(ai, "$(P)$(NAME):TEMP:SP:RBV")
 {
-    field(DESC, "Temperature")
+    field(DESC, "$(NAME) TSet readback")
     field(DTYP, "stream")
     field(INP, "@$(PROTO) get_chan_temp_sp($(PROTOCOL_NAME)) $(PORT)")
     field(SCAN, "1 second") 
 	field(PREC, "3")
 	field(EGU, "K")
 	
-	info(INTEREST, "HIGH")
 	info(archive, "VAL")
 	
 	field(SIML, "$(P)SIM")
@@ -38,9 +37,12 @@ alias("$(P)$(NAME):TEMP:SP:RBV", "$(P)$(NAME):TEMP:SP")
 # Record may be commented out - not all channels are associated with a stability.
 $(STABILITY=) record(stringin, "$(P)$(NAME):STABILITY")
 $(STABILITY=) {
+$(STABILITY=)     field(DESC, "$(NAME) stability")
 $(STABILITY=)     field(DTYP, "stream")
 $(STABILITY=)     field(INP, "@$(PROTO) get_stability_$(NAME) $(PORT)")
 $(STABILITY=)     field(SCAN, "1 second")
+$(STABILITY=)     info(INTEREST, "HIGH")
+$(STABILITY=)	  info(archive, "VAL")
 $(STABILITY=) 	
 $(STABILITY=)     field(SIML, "$(P)SIM")
 $(STABILITY=)     field(SIOL, "$(P)SIM:$(NAME):STABILITY")
@@ -49,12 +51,16 @@ $(STABILITY=) }
 
 record(bi, "$(P)$(NAME):HEATER:AUTO")
 {
+    field(DESC, "$(NAME) heater auto")
     field(DTYP, "stream")
     field(INP, "@$(PROTO) get_chan_heater_auto($(PROTOCOL_NAME)) $(PORT)")
     field(SCAN, "1 second")
 
     field(ZNAM, "Off")
     field(ONAM, "On")
+    
+    info(INTEREST, "HIGH")
+	info(archive, "VAL")
 	
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:$(NAME):HEATER:AUTO")
@@ -63,11 +69,15 @@ record(bi, "$(P)$(NAME):HEATER:AUTO")
 
 record(ai, "$(P)$(NAME):HEATER:PERCENT")
 {
+    field(DESC, "$(NAME) heater % power")
     field(DTYP, "stream")
     field(INP, "@$(PROTO) get_chan_heater_percent($(PROTOCOL_NAME)) $(PORT)")
     field(SCAN, "1 second")
     field(EGU, "%")
     field(PREC, "2")
+    
+    info(INTEREST, "HIGH")
+	info(archive, "VAL")
 	
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:$(NAME):HEATER:PERCENT")

@@ -33,6 +33,8 @@ record(ai, "$(P)TEMP")
 	field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:TEMP")
     field(SDIS, "$(P)DISABLE")
+    
+    info(alarm, "HELIOX")
 }
 
 record(ao, "$(P)TEMP:SP")
@@ -42,8 +44,7 @@ record(ao, "$(P)TEMP:SP")
     field(OUT, "@$(PROTO) set_temp $(PORT)")
 	field(PREC, "3")
 	field(EGU, "K")
-	
-	info(INTEREST, "HIGH")
+    
 	info(archive, "VAL")
 	
 	field(SIML, "$(P)SIM")
@@ -60,7 +61,6 @@ record(ai, "$(P)TEMP:SP:RBV")
 	field(PREC, "3")
 	field(EGU, "K")
 	
-	info(INTEREST, "HIGH")
 	info(archive, "VAL")
 	
 	field(SIML, "$(P)SIM")
@@ -70,6 +70,7 @@ record(ai, "$(P)TEMP:SP:RBV")
 
 record(stringin, "$(P)STABILITY")
 {
+    field(DESC, "Heliox stability readback")
     field(DTYP, "stream")
     field(INP, "@$(PROTO) get_stability $(PORT)")
     field(SCAN, "1 second")
@@ -77,6 +78,9 @@ record(stringin, "$(P)STABILITY")
 	field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:STABILITY")
     field(SDIS, "$(P)DISABLE")
+    
+    info(INTEREST, "HIGH")
+	info(archive, "VAL")
 }
 
 
