@@ -36,6 +36,17 @@ record(ai, "$(P)$(NAME):TEMP:SP:RBV")
 alias("$(P)$(NAME):TEMP:SP:RBV", "$(P)$(NAME):TEMP:SP")
 
 
+$(STABILITY=) record(stringin, "$(P)$(NAME):STABILITY")
+$(STABILITY=) {
+$(STABILITY=)     field(DTYP, "stream")
+$(STABILITY=)     field(INP, "@$(PROTO) get_stability_$(NAME) $(PORT)")
+$(STABILITY=)     field(SCAN, "1 second")
+$(STABILITY=) 	
+$(STABILITY=)     field(SIML, "$(P)SIM")
+$(STABILITY=)     field(SIOL, "$(P)SIM:$(NAME):STABILITY")
+$(STABILITY=)     field(SDIS, "$(P)DISABLE")
+$(STABILITY=) }
+
 
 
 # Simulation records
@@ -46,3 +57,8 @@ record(ao, "$(P)SIM:$(NAME):TEMP")
 
 alias("$(P)SIM:$(NAME):TEMP", "$(P)SIM:$(NAME):TEMP:SP")
 alias("$(P)SIM:$(NAME):TEMP", "$(P)SIM:$(NAME):TEMP:SP:RBV")
+
+record(stringout, "$(P)SIM:$(NAME):STABILITY") {
+    field(VAL, "Stable")
+	field(PINI, "YES")
+}

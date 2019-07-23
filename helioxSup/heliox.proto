@@ -71,3 +71,15 @@ get_temp_sp_HEHIGH {
     in "STAT:DEV:HeHigh:TEMP:LOOP:TSET:%fK";
 }
 
+# Channel stabilities
+
+get_stability_HE3SORB {
+    out "READ:DEV:HelioxX:HEL:SIG:SRBS";
+    in "STAT:DEV:HelioxX:HEL:SIG:SRBS:%[^:]";
+}
+
+get_stability_HE4POT {
+    out "READ:DEV:HelioxX:HEL:SIG:H4PS";
+    in "STAT:DEV:HelioxX:HEL:SIG:H4PS:%[^:]";
+}
+

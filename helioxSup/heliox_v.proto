@@ -14,7 +14,7 @@ Terminator = LF;
 # Read variables that come from the top-level "HelioxX" interface.
 
 get_temp {
-    out "@1READ:DEV:HelioxX:HEL";
+    out "READ:DEV:HelioxX:HEL";
     in "STAT:DEV:HelioxX:HEL"
 	   ":LOWT:%*fK"
        ":BT:%*fK"
@@ -35,7 +35,7 @@ get_temp {
        ":SRBS:%*[^:]"
        ":SRBR:%*fK"
        ":SCT:%*fK"
-       ":NVLT:%*fmB"
+       ":NVLT:%*fmB";
 }
 
 set_temp {
@@ -44,7 +44,7 @@ set_temp {
 }
 
 get_temp_sp_rbv {
-    out "@1READ:DEV:HelioxX:HEL";
+    out "READ:DEV:HelioxX:HEL";
     in "STAT:DEV:HelioxX:HEL"
 	   ":LOWT:%*fK"
        ":BT:%*fK"
@@ -65,11 +65,11 @@ get_temp_sp_rbv {
        ":SRBS:%*[^:]"
        ":SRBR:%*fK"
        ":SCT:%*fK"
-       ":NVLT:%*fmB"
+       ":NVLT:%*fmB";
 }
 
 get_stability {
-    out "@1READ:DEV:HelioxX:HEL";
+    out "READ:DEV:HelioxX:HEL";
     in "STAT:DEV:HelioxX:HEL"
 	   ":LOWT:%*fK"
        ":BT:%*fK"
@@ -90,7 +90,7 @@ get_stability {
        ":SRBS:%*[^:]"
        ":SRBR:%*fK"
        ":SCT:%*fK"
-       ":NVLT:%*fmB"
+       ":NVLT:%*fmB";
 }
 
 # Read channel temperatures.
@@ -128,10 +128,10 @@ get_temp_HE3SORB {
        ":TYPE:%*[^:]"
        ":SIG:VOLT:%*fmV"
        ":CURR:%*fA"
-       ":TEMP:%f"
+       ":TEMP:%fK"
        ":POWR:%*fW"
-       ":RES:%*f"
-       ":SLOP:%*f/K"
+       ":RES:%*fO"
+       ":SLOP:%*fO/K";
 }
 
 
@@ -168,10 +168,10 @@ get_temp_HE4POT {
        ":TYPE:%*[^:]"
        ":SIG:VOLT:%*fmV"
        ":CURR:%*fA"
-       ":TEMP:%f"
+       ":TEMP:%fK"
        ":POWR:%*fW"
-       ":RES:%*f"
-       ":SLOP:%*f/K"
+       ":RES:%*fO"
+       ":SLOP:%*fO/K";
 }
 
 
@@ -208,10 +208,10 @@ get_temp_HEHIGH {
        ":TYPE:%*[^:]"
        ":SIG:VOLT:%*fmV"
        ":CURR:%*fA"
-       ":TEMP:%f"
+       ":TEMP:%fK"
        ":POWR:%*fW"
-       ":RES:%*f"
-       ":SLOP:%*f/K"
+       ":RES:%*fO"
+       ":SLOP:%*fO/K";
 }
 
 
@@ -248,10 +248,10 @@ get_temp_HELOW {
        ":TYPE:%*[^:]"
        ":SIG:VOLT:%*fmV"
        ":CURR:%*fA"
-       ":TEMP:%f"
+       ":TEMP:%fK"
        ":POWR:%*fW"
-       ":RES:%*f"
-       ":SLOP:%*f/K"
+       ":RES:%*fO"
+       ":SLOP:%*fO/K";
 }
 
 
@@ -290,10 +290,10 @@ get_temp_sp_HE3SORB {
        ":TYPE:%*[^:]"
        ":SIG:VOLT:%*fmV"
        ":CURR:%*fA"
-       ":TEMP:%*f"
+       ":TEMP:%*fK"
        ":POWR:%*fW"
-       ":RES:%*f"
-       ":SLOP:%*f/K"
+       ":RES:%*fO"
+       ":SLOP:%*fO/K";
 }
 
 get_temp_sp_HE4POT {
@@ -329,10 +329,10 @@ get_temp_sp_HE4POT {
        ":TYPE:%*[^:]"
        ":SIG:VOLT:%*fmV"
        ":CURR:%*fA"
-       ":TEMP:%*f"
+       ":TEMP:%*fK"
        ":POWR:%*fW"
-       ":RES:%*f"
-       ":SLOP:%*f/K"
+       ":RES:%*fO"
+       ":SLOP:%*fO/K";
 }
 
 get_temp_sp_HEHIGH {
@@ -368,10 +368,10 @@ get_temp_sp_HEHIGH {
        ":TYPE:%*[^:]"
        ":SIG:VOLT:%*fmV"
        ":CURR:%*fA"
-       ":TEMP:%*f"
+       ":TEMP:%*fK"
        ":POWR:%*fW"
-       ":RES:%*f"
-       ":SLOP:%*f/K"
+       ":RES:%*fO"
+       ":SLOP:%*fO/K";
 }
 
 get_temp_sp_HELOW {
@@ -407,9 +407,60 @@ get_temp_sp_HELOW {
        ":TYPE:%*[^:]"
        ":SIG:VOLT:%*fmV"
        ":CURR:%*fA"
-       ":TEMP:%*f"
+       ":TEMP:%*fK"
        ":POWR:%*fW"
-       ":RES:%*f"
-       ":SLOP:%*f/K"
+       ":RES:%*fO"
+       ":SLOP:%*fO/K";
 }
 
+# Channel stabilities
+
+get_stability_HE3SORB {
+    out "READ:DEV:HelioxX:HEL";
+	in "STAT:DEV:HelioxX:HEL"
+	   ":LOWT:%*fK"
+       ":BT:%*fK"
+       ":NVCN:%*fmB"
+       ":RCTD:%*fK"
+       ":RCST:%*fK"
+       ":NVHT:%*fmB"
+       ":RCTE:%*fK"
+       ":SRBH:%*fK"
+       ":PE:%*fK"
+       ":RGNA:%*fK"
+       ":PCT:%*fK"
+       ":SIG:H4PS:%*[^:]"
+       ":STAT:%*[^:]"
+       ":TEMP:%*fK"
+       ":TSET:%*fK"
+       ":H3PS:%*[^:]"
+       ":SRBS:%[^:]"
+       ":SRBR:%*fK"
+       ":SCT:%*fK"
+       ":NVLT:%*fmB";
+}
+
+get_stability_HE4POT {
+    out "READ:DEV:HelioxX:HEL";
+    in "STAT:DEV:HelioxX:HEL"
+	   ":LOWT:%*fK"
+       ":BT:%*fK"
+       ":NVCN:%*fmB"
+       ":RCTD:%*fK"
+       ":RCST:%*fK"
+       ":NVHT:%*fmB"
+       ":RCTE:%*fK"
+       ":SRBH:%*fK"
+       ":PE:%*fK"
+       ":RGNA:%*fK"
+       ":PCT:%*fK"
+       ":SIG:H4PS:%[^:]"
+       ":STAT:%*[^:]"
+       ":TEMP:%*fK"
+       ":TSET:%*fK"
+       ":H3PS:%*[^:]"
+       ":SRBS:%*[^:]"
+       ":SRBR:%*fK"
+       ":SCT:%*fK"
+       ":NVLT:%*fmB";
+}
