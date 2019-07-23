@@ -27,48 +27,19 @@ get_stability {
     in "STAT:DEV:HelioxX:HEL:SIG:H3PS:%[^:]";
 }
 
-# Read channel temperatures.
-
-get_temp_HE3SORB {
-    out "READ:DEV:He3Sorb:TEMP:SIG:TEMP";
-    in "STAT:DEV:He3Sorb:TEMP:SIG:TEMP:%fK";
+get_chan_temp {
+    out "READ:DEV:\$1:TEMP:SIG:TEMP";
+    in "STAT:DEV:\$1:TEMP:SIG:TEMP:%fK";
 }
 
-get_temp_HE4POT {
-    out "READ:DEV:He4Pot:TEMP:SIG:TEMP";
-    in "STAT:DEV:He4Pot:TEMP:SIG:TEMP:%fK";
+get_chan_temp_sp {
+    out "READ:DEV:\$1:TEMP:LOOP:TSET";
+    in "STAT:DEV:\$1:TEMP:LOOP:TSET:%fK";
 }
 
-get_temp_HELOW {
-    out "READ:DEV:HeLow:TEMP:SIG:TEMP";
-    in "STAT:DEV:HeLow:TEMP:SIG:TEMP:%fK";
-}
-
-get_temp_HEHIGH {
-    out "READ:DEV:HeHigh:TEMP:SIG:TEMP";
-    in "STAT:DEV:HeHigh:TEMP:SIG:TEMP:%fK";
-}
-
-# Read channel temperature setpoint readbacks.
-
-get_temp_sp_HE3SORB {
-    out "READ:DEV:He3Sorb:TEMP:LOOP:TSET";
-    in "STAT:DEV:He3Sorb:TEMP:LOOP:TSET:%fK";
-}
-
-get_temp_sp_HE4POT {
-    out "READ:DEV:He4Pot:TEMP:LOOP:TSET";
-    in "STAT:DEV:He4Pot:TEMP:LOOP:TSET:%fK";
-}
-
-get_temp_sp_HELOW {
-    out "READ:DEV:HeLow:TEMP:LOOP:TSET";
-    in "STAT:DEV:HeLow:TEMP:LOOP:TSET:%fK";
-}
-
-get_temp_sp_HEHIGH {
-    out "READ:DEV:HeHigh:TEMP:LOOP:TSET";
-    in "STAT:DEV:HeHigh:TEMP:LOOP:TSET:%fK";
+get_chan_heater_auto {
+    out "READ:DEV:\$1:TEMP:LOOP:ENAB";
+    in "STAT:DEV:\$1:TEMP:LOOP:ENAB:%{OFF|ON}";
 }
 
 # Channel stabilities

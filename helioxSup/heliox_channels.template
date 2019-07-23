@@ -2,7 +2,7 @@ record(ai, "$(P)$(NAME):TEMP")
 {
     field(DESC, "Temperature")
     field(DTYP, "stream")
-    field(INP, "@$(PROTO) get_temp_$(NAME) $(PORT)")
+    field(INP, "@$(PROTO) get_chan_temp($(PROTOCOL_NAME)) $(PORT)")
     field(SCAN, "1 second") 
 	field(PREC, "3")
 	field(EGU, "K")
@@ -19,7 +19,7 @@ record(ai, "$(P)$(NAME):TEMP:SP:RBV")
 {
     field(DESC, "Temperature")
     field(DTYP, "stream")
-    field(INP, "@$(PROTO) get_temp_sp_$(NAME) $(PORT)")
+    field(INP, "@$(PROTO) get_chan_temp_sp($(PROTOCOL_NAME)) $(PORT)")
     field(SCAN, "1 second") 
 	field(PREC, "3")
 	field(EGU, "K")
@@ -35,7 +35,7 @@ record(ai, "$(P)$(NAME):TEMP:SP:RBV")
 # Cannot set the individual channels so just alias to sp rbv
 alias("$(P)$(NAME):TEMP:SP:RBV", "$(P)$(NAME):TEMP:SP")
 
-
+# Record may be commented out - not all channels are associated with a stability.
 $(STABILITY=) record(stringin, "$(P)$(NAME):STABILITY")
 $(STABILITY=) {
 $(STABILITY=)     field(DTYP, "stream")
@@ -46,6 +46,20 @@ $(STABILITY=)     field(SIML, "$(P)SIM")
 $(STABILITY=)     field(SIOL, "$(P)SIM:$(NAME):STABILITY")
 $(STABILITY=)     field(SDIS, "$(P)DISABLE")
 $(STABILITY=) }
+
+record(bi, "$(P)$(NAME):HEATER:AUTO")
+{
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) get_chan_heater_auto($(PROTOCOL_NAME)) $(PORT)")
+    field(SCAN, "1 second")
+
+    field(ZNAM, "Off")
+    field(ONAM, "On")
+	
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:$(NAME):HEATER:AUTO")
+    field(SDIS, "$(P)DISABLE")
+}
 
 
 
@@ -62,3 +76,5 @@ record(stringout, "$(P)SIM:$(NAME):STABILITY") {
     field(VAL, "Stable")
 	field(PINI, "YES")
 }
+
+record(bi, "$(P)SIM:$(NAME):HEATER:AUTO") {}

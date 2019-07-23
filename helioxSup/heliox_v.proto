@@ -95,9 +95,9 @@ get_stability {
 
 # Read channel temperatures.
 
-get_temp_HE3SORB {
-    out "READ:DEV:He3Sorb:TEMP";
-    in "STAT:DEV:He3Sorb:TEMP"
+get_chan_temp {
+    out "READ:DEV:\$1:TEMP";
+    in "STAT:DEV:\$1:TEMP"
        ":EXCT:TYPE:%*[^:]"
 	   ":MAG:%*f"
        ":STAT:%*f"
@@ -133,133 +133,12 @@ get_temp_HE3SORB {
        ":RES:%*fO"
        ":SLOP:%*fO/K";
 }
-
-
-get_temp_HE4POT {
-    out "READ:DEV:He4Pot:TEMP";
-    in "STAT:DEV:He4Pot:TEMP"
-       ":EXCT:TYPE:%*[^:]"
-	   ":MAG:%*f"
-       ":STAT:%*f"
-       ":NICK:%*[^:]"
-       ":LOOP:AUX:%*[^:]"
-       ":D:%*f"
-       ":HTR:%*[^:]"
-       ":I:%*f"
-       ":THTF:%*[^:]"
-       ":HSET:%*f"
-       ":PIDT:%*[^:]"
-       ":ENAB:%*[^:]"
-       ":SWFL:%*[^:]"
-       ":FAUT:%*[^:]"
-       ":FSET:%*f"
-       ":PIDF:%*[^:]"
-       ":P:%*f"
-       ":SWMD:%*[^:]"
-       ":TSET:%*fK"
-       ":MAN:HVER:%*f"
-       ":FVER:%*f"
-       ":SERL:%*f"
-       ":CAL:OFFS:%*f"
-       ":COLDL:%*fK"
-       ":INT:LIN:SCAL:%*f"
-       ":FILE:%*[^:]"
-       ":HOTL:%*fK"
-       ":TYPE:%*[^:]"
-       ":SIG:VOLT:%*fmV"
-       ":CURR:%*fA"
-       ":TEMP:%fK"
-       ":POWR:%*fW"
-       ":RES:%*fO"
-       ":SLOP:%*fO/K";
-}
-
-
-get_temp_HEHIGH {
-    out "READ:DEV:HeHigh:TEMP";
-    in "STAT:DEV:HeHigh:TEMP"
-       ":EXCT:TYPE:%*[^:]"
-	   ":MAG:%*f"
-       ":STAT:%*f"
-       ":NICK:%*[^:]"
-       ":LOOP:AUX:%*[^:]"
-       ":D:%*f"
-       ":HTR:%*[^:]"
-       ":I:%*f"
-       ":THTF:%*[^:]"
-       ":HSET:%*f"
-       ":PIDT:%*[^:]"
-       ":ENAB:%*[^:]"
-       ":SWFL:%*[^:]"
-       ":FAUT:%*[^:]"
-       ":FSET:%*f"
-       ":PIDF:%*[^:]"
-       ":P:%*f"
-       ":SWMD:%*[^:]"
-       ":TSET:%*fK"
-       ":MAN:HVER:%*f"
-       ":FVER:%*f"
-       ":SERL:%*f"
-       ":CAL:OFFS:%*f"
-       ":COLDL:%*fK"
-       ":INT:LIN:SCAL:%*f"
-       ":FILE:%*[^:]"
-       ":HOTL:%*fK"
-       ":TYPE:%*[^:]"
-       ":SIG:VOLT:%*fmV"
-       ":CURR:%*fA"
-       ":TEMP:%fK"
-       ":POWR:%*fW"
-       ":RES:%*fO"
-       ":SLOP:%*fO/K";
-}
-
-
-get_temp_HELOW {
-    out "READ:DEV:HeLow:TEMP";
-    in "STAT:DEV:HeLow:TEMP"
-       ":EXCT:TYPE:%*[^:]"
-	   ":MAG:%*f"
-       ":STAT:%*f"
-       ":NICK:%*[^:]"
-       ":LOOP:AUX:%*[^:]"
-       ":D:%*f"
-       ":HTR:%*[^:]"
-       ":I:%*f"
-       ":THTF:%*[^:]"
-       ":HSET:%*f"
-       ":PIDT:%*[^:]"
-       ":ENAB:%*[^:]"
-       ":SWFL:%*[^:]"
-       ":FAUT:%*[^:]"
-       ":FSET:%*f"
-       ":PIDF:%*[^:]"
-       ":P:%*f"
-       ":SWMD:%*[^:]"
-       ":TSET:%*fK"
-       ":MAN:HVER:%*f"
-       ":FVER:%*f"
-       ":SERL:%*f"
-       ":CAL:OFFS:%*f"
-       ":COLDL:%*fK"
-       ":INT:LIN:SCAL:%*f"
-       ":FILE:%*[^:]"
-       ":HOTL:%*fK"
-       ":TYPE:%*[^:]"
-       ":SIG:VOLT:%*fmV"
-       ":CURR:%*fA"
-       ":TEMP:%fK"
-       ":POWR:%*fW"
-       ":RES:%*fO"
-       ":SLOP:%*fO/K";
-}
-
 
 # Read channel temperature setpoint readbacks.
 
-get_temp_sp_HE3SORB {
-    out "READ:DEV:He3Sorb:TEMP";
-    in "STAT:DEV:He3Sorb:TEMP"
+get_chan_temp_sp {
+    out "READ:DEV:\$1:TEMP";
+    in "STAT:DEV:\$1:TEMP"
        ":EXCT:TYPE:%*[^:]"
 	   ":MAG:%*f"
        ":STAT:%*f"
@@ -296,48 +175,11 @@ get_temp_sp_HE3SORB {
        ":SLOP:%*fO/K";
 }
 
-get_temp_sp_HE4POT {
-    out "READ:DEV:He4Pot:TEMP";
-    in "STAT:DEV:He4Pot:TEMP"
-       ":EXCT:TYPE:%*[^:]"
-	   ":MAG:%*f"
-       ":STAT:%*f"
-       ":NICK:%*[^:]"
-       ":LOOP:AUX:%*[^:]"
-       ":D:%*f"
-       ":HTR:%*[^:]"
-       ":I:%*f"
-       ":THTF:%*[^:]"
-       ":HSET:%*f"
-       ":PIDT:%*[^:]"
-       ":ENAB:%*[^:]"
-       ":SWFL:%*[^:]"
-       ":FAUT:%*[^:]"
-       ":FSET:%*f"
-       ":PIDF:%*[^:]"
-       ":P:%*f"
-       ":SWMD:%*[^:]"
-       ":TSET:%fK"
-       ":MAN:HVER:%*f"
-       ":FVER:%*f"
-       ":SERL:%*f"
-       ":CAL:OFFS:%*f"
-       ":COLDL:%*fK"
-       ":INT:LIN:SCAL:%*f"
-       ":FILE:%*[^:]"
-       ":HOTL:%*fK"
-       ":TYPE:%*[^:]"
-       ":SIG:VOLT:%*fmV"
-       ":CURR:%*fA"
-       ":TEMP:%*fK"
-       ":POWR:%*fW"
-       ":RES:%*fO"
-       ":SLOP:%*fO/K";
-}
+# Read channel heater statuses
 
-get_temp_sp_HEHIGH {
-    out "READ:DEV:HeHigh:TEMP";
-    in "STAT:DEV:HeHigh:TEMP"
+get_chan_heater_auto {
+    out "READ:DEV:\$1:TEMP";
+    in "STAT:DEV:\$1:TEMP"
        ":EXCT:TYPE:%*[^:]"
 	   ":MAG:%*f"
        ":STAT:%*f"
@@ -349,53 +191,14 @@ get_temp_sp_HEHIGH {
        ":THTF:%*[^:]"
        ":HSET:%*f"
        ":PIDT:%*[^:]"
-       ":ENAB:%*[^:]"
+       ":ENAB:%{OFF|ON}"
        ":SWFL:%*[^:]"
        ":FAUT:%*[^:]"
        ":FSET:%*f"
        ":PIDF:%*[^:]"
        ":P:%*f"
        ":SWMD:%*[^:]"
-       ":TSET:%fK"
-       ":MAN:HVER:%*f"
-       ":FVER:%*f"
-       ":SERL:%*f"
-       ":CAL:OFFS:%*f"
-       ":COLDL:%*fK"
-       ":INT:LIN:SCAL:%*f"
-       ":FILE:%*[^:]"
-       ":HOTL:%*fK"
-       ":TYPE:%*[^:]"
-       ":SIG:VOLT:%*fmV"
-       ":CURR:%*fA"
-       ":TEMP:%*fK"
-       ":POWR:%*fW"
-       ":RES:%*fO"
-       ":SLOP:%*fO/K";
-}
-
-get_temp_sp_HELOW {
-    out "READ:DEV:HeLow:TEMP";
-    in "STAT:DEV:HeLow:TEMP"
-       ":EXCT:TYPE:%*[^:]"
-	   ":MAG:%*f"
-       ":STAT:%*f"
-       ":NICK:%*[^:]"
-       ":LOOP:AUX:%*[^:]"
-       ":D:%*f"
-       ":HTR:%*[^:]"
-       ":I:%*f"
-       ":THTF:%*[^:]"
-       ":HSET:%*f"
-       ":PIDT:%*[^:]"
-       ":ENAB:%*[^:]"
-       ":SWFL:%*[^:]"
-       ":FAUT:%*[^:]"
-       ":FSET:%*f"
-       ":PIDF:%*[^:]"
-       ":P:%*f"
-       ":SWMD:%*[^:]"
-       ":TSET:%fK"
+       ":TSET:%*fK"
        ":MAN:HVER:%*f"
        ":FVER:%*f"
        ":SERL:%*f"
