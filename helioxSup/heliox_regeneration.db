@@ -1,0 +1,19 @@
+# Holds a circular buffer of error statuses from main temperature record at 1s intervals for 120s.
+record(compress, "$(P)_TEMPERATURE_COMMS_ERROR_BUFFER") {
+  field(INP, "$(P)TEMP.SEVR")
+  field(ALG, "Circular Buffer")
+  field(NSAM, "120")
+  field(SCAN, "1 second")
+  field(FLNK, "$(P)_TEMPERATURE_COMMS_ERROR")
+}
+
+# Selects largest error status from circular buffer above.
+# If >=3, there has been a comms error in the last 120 seconds.
+# If (1|2) there has a (minor|major) alarm within last 120 seconds.
+# If 0, there have been no alarms within last 120 seconds.
+record(compress, "$(P)_TEMPERATURE_COMMS_ERROR") {
+  field(INP, "$(P)_TEMPERATURE_COMMS_ERROR_BUFFER")
+  field(ALG, "N to 1 High Value")
+  field(NSAM, "1")
+  field(N, "120")
+}

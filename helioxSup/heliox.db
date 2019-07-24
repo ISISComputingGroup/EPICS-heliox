@@ -83,12 +83,25 @@ record(stringin, "$(P)STABILITY")
 	info(archive, "VAL")
 }
 
+# record(stringin, "$(P)MODE")
+# {
+#     field(DESC, "Heliox mode readback")
+#     field(DTYP, "stream")
+#     field(INP, "@$(PROTO) get_mode $(PORT)")
+#     field(SCAN, "1 second")
+# 	
+# 	field(SIML, "$(P)SIM")
+#     field(SIOL, "$(P)SIM:MODE")
+#     field(SDIS, "$(P)DISABLE")
+#     
+#     info(INTEREST, "HIGH")
+# 	info(archive, "VAL")
+# }
+
 
 # Simulation records
 
-record(ao, "$(P)SIM:TEMP")
-{
-}
+record(ao, "$(P)SIM:TEMP") {}
 
 alias("$(P)SIM:TEMP", "$(P)SIM:TEMP:SP")
 alias("$(P)SIM:TEMP", "$(P)SIM:TEMP:SP:RBV")
@@ -97,3 +110,5 @@ record(stringout, "$(P)SIM:STABILITY") {
     field(VAL, "Stable")
 	field(PINI, "YES")
 }
+
+record(stringout, "$(P)SIM:MODE") {}

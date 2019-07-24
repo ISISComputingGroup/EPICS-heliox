@@ -93,6 +93,31 @@ get_stability {
        ":NVLT:%*fmB";
 }
 
+get_mode {
+    out "READ:DEV:HelioxX:HEL";
+    in "STAT:DEV:HelioxX:HEL"
+	   ":LOWT:%*fK"
+       ":BT:%*fK"
+       ":NVCN:%*fmB"
+       ":RCTD:%*fK"
+       ":RCST:%*fK"
+       ":NVHT:%*fmB"
+       ":RCTE:%*fK"
+       ":SRBH:%*fK"
+       ":PE:%*fK"
+       ":RGNA:%*fK"
+       ":PCT:%*fK"
+       ":SIG:H4PS:%*[^:]"
+       ":STAT:%[^:]"
+       ":TEMP:%*fK"
+       ":TSET:%*fK"
+       ":H3PS:%*[^:]"
+       ":SRBS:%*[^:]"
+       ":SRBR:%*fK"
+       ":SCT:%*fK"
+       ":NVLT:%*fmB";
+}
+
 # Read channel temperatures.
 
 get_chan_temp {

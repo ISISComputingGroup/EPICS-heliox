@@ -27,6 +27,11 @@ get_stability {
     in "STAT:DEV:HelioxX:HEL:SIG:H3PS:%[^:]";
 }
 
+get_mode {
+    out "READ:DEV:HelioxX:HEL:SIG:STAT";
+    in "STAT:DEV:HelioxX:HEL:SIG:STAT:%#s";
+}
+
 get_chan_temp {
     out "READ:DEV:\$1:TEMP:SIG:TEMP";
     in "STAT:DEV:\$1:TEMP:SIG:TEMP:%fK";
