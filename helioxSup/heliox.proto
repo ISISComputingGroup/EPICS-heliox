@@ -1,0 +1,61 @@
+ReadTimeout = 1000;
+WriteTimeout = 1000;
+ReplyTimeout = 1000;
+
+
+Terminator = LF;
+
+# Read variables that come from the top-level "HelioxX" interface.
+
+get_temp {
+    out "READ:DEV:HelioxX:HEL:SIG:TEMP";
+    in "STAT:DEV:HelioxX:HEL:SIG:TEMP:%fK";
+}
+
+set_temp {
+    out "SET:DEV:HelioxX:HEL:SIG:TSET:%fK";
+	in "STAT:DEV:HelioxX:HEL:SIG:TSET:%*fK";
+}
+
+get_temp_sp_rbv {
+    out "READ:DEV:HelioxX:HEL:SIG:TSET";
+    in "STAT:DEV:HelioxX:HEL:SIG:TSET:%fK";
+}
+
+get_stability {
+    out "READ:DEV:HelioxX:HEL:SIG:H3PS";
+    in "STAT:DEV:HelioxX:HEL:SIG:H3PS:%[^:]";
+}
+
+get_chan_temp {
+    out "READ:DEV:\$1:TEMP:SIG:TEMP";
+    in "STAT:DEV:\$1:TEMP:SIG:TEMP:%fK";
+}
+
+get_chan_temp_sp {
+    out "READ:DEV:\$1:TEMP:LOOP:TSET";
+    in "STAT:DEV:\$1:TEMP:LOOP:TSET:%fK";
+}
+
+get_chan_heater_auto {
+    out "READ:DEV:\$1:TEMP:LOOP:ENAB";
+    in "STAT:DEV:\$1:TEMP:LOOP:ENAB:%{OFF|ON}";
+}
+
+get_chan_heater_percent {
+    out "READ:DEV:\$1:TEMP:LOOP:HSET";
+    in "STAT:DEV:\$1:TEMP:LOOP:HSET:%f";
+}
+
+# Channel stabilities
+
+get_stability_HE3SORB {
+    out "READ:DEV:HelioxX:HEL:SIG:SRBS";
+    in "STAT:DEV:HelioxX:HEL:SIG:SRBS:%[^:]";
+}
+
+get_stability_HE4POT {
+    out "READ:DEV:HelioxX:HEL:SIG:H4PS";
+    in "STAT:DEV:HelioxX:HEL:SIG:H4PS:%[^:]";
+}
+
