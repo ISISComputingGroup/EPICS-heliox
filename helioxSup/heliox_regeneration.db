@@ -61,5 +61,49 @@ record(calc, "$(P)REGEN:TEMP_COARSE_CHECK") {
 }
 
 #
-# Regeneration condition: rate of change of temperature over the last $(DRIFT_TIME) seconds > $(DRIFT_THRESHOLD)
+# Regeneration condition: rate of change of temperature over the last $(DRIFT_BUFFER_SIZE) seconds > \$(DRIFT_THRESHOLD)
 #
+
+record(compress, "$(P)REGEN:_DRIFT_BUFFER_TEMP") {
+  field(INP, "$(P)TEMP MS")
+  field(ALG, "Circular Buffer")
+  field(NSAM, "$(DRIFT_BUFFER_SIZE)")
+  field(SCAN, "1 second")
+  field(FLNK, "$(P)REGEN:_DRIFT_BUFFER_TIME")
+}
+
+record(compress, "$(P)REGEN:_DRIFT_BUFFER_TIME") {
+  field(INP, "$(TIME)")  # Get current time whenever forward linked by record above updating with new temperature.
+  field(ALG, "Circular Buffer")
+  field(NSAM, "$(DRIFT_BUFFER_SIZE)")
+  field(FLNK, "$(P)REGEN:_CALCULATE_TEMP_DRIFT")
+}
+
+record(aSub, "$(P)REGEN:_CALCULATE_TEMP_DRIFT")
+{
+    field(SNAM, "line_of_best_fit")
+    
+    field(INPA, "$(P)REGEN:_DRIFT_BUFFER_TEMP")
+    field(FTA, "DOUBLE")
+    field(NOA, "$(DRIFT_BUFFER_SIZE)")
+    
+    field(INPB, "$(P)REGEN:_DRIFT_BUFFER_TIME")
+    field(FTB, "DOUBLE")
+    field(NOB, "$(DRIFT_BUFFER_SIZE)")
+    
+    # c0 where temp = c0 + (c1 * time)
+    field(FTVA, "DOUBLE")
+    field(NOVA, "1")
+      
+    # c1 where temp = c0 + (c1 * time). Note: units of K/second
+    field(FTVB, "DOUBLE")
+    field(NOVB, "1")
+    
+    field(FLNK, "$(P)REGEN:TEMP_DRIFT_RATE")
+}
+
+# Calculate if the drift rate, in K/minute, is greater than the drift threshold.
+record(calc, "$(P)REGEN:TEMP_DRIFT_RATE") {
+    field(INPA, "$(P)REGEN:_CALCULATE_TEMP_DRIFT.VALB")
+    field(CALC, "(A*60.0) > $(DRIFT_THRESHOLD_KMIN)")
+}
