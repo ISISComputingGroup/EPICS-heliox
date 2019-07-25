@@ -93,7 +93,7 @@ get_stability {
        ":NVLT:%*fmB";
 }
 
-get_mode {
+get_status {
     out "READ:DEV:HelioxX:HEL";
     in "STAT:DEV:HelioxX:HEL"
 	   ":LOWT:%*fK"

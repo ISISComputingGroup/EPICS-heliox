@@ -107,3 +107,13 @@ record(calc, "$(P)REGEN:TEMP_DRIFT_RATE") {
     field(INPA, "$(P)REGEN:_CALCULATE_TEMP_DRIFT.VALB")
     field(CALC, "(A*60.0) > $(DRIFT_THRESHOLD_KMIN)")
 }
+
+#
+# Regeneration condition: heliox status must be "Low Temp"
+#
+
+record(scalcout, "$(P)REGEN:LOW_TEMP_MODE") 
+{
+    field(INAA, "$(P)STATUS CP MS")
+	field(CALC, "(AA=='Low Temp')")
+}

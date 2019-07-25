@@ -27,7 +27,8 @@ get_stability {
     in "STAT:DEV:HelioxX:HEL:SIG:H3PS:%[^:]";
 }
 
-get_mode {
+# Read a string rather than an enum as we don't know the full set of statuses we might get here.
+get_status {
     out "READ:DEV:HelioxX:HEL:SIG:STAT";
     in "STAT:DEV:HelioxX:HEL:SIG:STAT:%#s";
 }
