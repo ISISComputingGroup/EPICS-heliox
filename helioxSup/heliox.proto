@@ -14,7 +14,7 @@ get_temp {
 
 set_temp {
     out "SET:DEV:HelioxX:HEL:SIG:TSET:%fK";
-	in "STAT:DEV:HelioxX:HEL:SIG:TSET:%*fK";
+	in "STAT:SET:DEV:HelioxX:HEL:SIG:TSET:%*fK:VALID";
 }
 
 get_temp_sp_rbv {

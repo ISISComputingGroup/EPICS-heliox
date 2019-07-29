@@ -6,7 +6,7 @@ DATA += heliox.proto
 DATA += heliox_v.proto
 
 DB += heliox.db
-DB += heliox_channels.db
+DB += heliox_channel.db
 DB += heliox_regeneration.db
 
 #=======================================
