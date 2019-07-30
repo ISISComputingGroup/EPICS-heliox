@@ -3,7 +3,7 @@
 #
 
 # Holds a circular buffer of error statuses from main temperature record at 1s intervals for 120s.
-record(compress, "$(P)REGEN:_TEMPERATURE_COMMS_ERROR_BUFFER") {
+record(compress, "$(P)REGEN:_TEMP_COMMS_ERR_BUFF") {
   field(INP, "$(P)TEMP.SEVR")
   field(ALG, "Circular Buffer")
   field(NSAM, "120")
@@ -14,8 +14,8 @@ record(compress, "$(P)REGEN:_TEMPERATURE_COMMS_ERROR_BUFFER") {
 # If >=3, there has been a comms error in the last 120 seconds.
 # If (1|2) there has a (minor|major) alarm within last 120 seconds.
 # If 0, there have been no alarms within last 120 seconds.
-record(compress, "$(P)REGEN:_TEMPERATURE_COMMS_ERROR_COMPRESS") {
-  field(INP, "$(P)REGEN:_TEMPERATURE_COMMS_ERROR_BUFFER CP MS")
+record(compress, "$(P)REGEN:_TEMP_COMMS_ERR_COMP") {
+  field(INP, "$(P)REGEN:_TEMP_COMMS_ERR_BUFF CP MS")
   field(ALG, "N to 1 High Value")
   field(NSAM, "1")
   field(N, "120")
@@ -23,9 +23,9 @@ record(compress, "$(P)REGEN:_TEMPERATURE_COMMS_ERROR_COMPRESS") {
 
 # True if there has been no comms error within the last 120 secs.
 record(calc, "$(P)REGEN:NO_RECENT_COMMS_ERROR") {
-    field(INPA, "$(P)_TEMPERATURE_COMMS_ERROR_COMPRESS CP")
-    field(INPB, "$(P)_TEMPERATURE_COMMS_ERROR_COMPRESS.SEVR CP")
-    field(CALC, "A<3 && B=0")
+    field(INPA, "$(P)REGEN:_TEMP_COMMS_ERR_COMP CP")
+    field(INPB, "$(P)REGEN:_TEMP_COMMS_ERR_COMP.SEVR CP")
+    field(CALC, "(A<3)&&(B=0)")
     field(ASG, "READONLY")
 }
 
@@ -116,4 +116,22 @@ record(scalcout, "$(P)REGEN:LOW_TEMP_MODE")
 {
     field(INAA, "$(P)STATUS CP MS")
 	field(CALC, "(AA=='Low Temp')")
+}
+
+#
+# Overall regenerate status
+#
+
+record(calc, "$(P)REGEN:REQUIRED") {
+    field(INPA, "$(P)REGEN:LOW_TEMP_MODE CP MS")
+    field(INPB, "$(P)TEMP CP MS")
+    field(INPC, "$(P)HE3SORB:HEATER:AUTO CP MS")
+    field(INPD, "$(P)HE3SORB:HEATER:PERCENT CP MS")
+    field(INPE, "$(P)REGEN:NO_RECENT_COMMS_ERROR CP MS")
+    field(INPF, "")
+    field(INPG, "$(P)REGEN:TEMP_DRIFT_RATE")
+    field(INPH, "$(P)REGEN:_DIFF_BETWEEN_TSET_AND_TEMP")
+    field(INPI, "$(P)REGEN:TEMP_COARSE_CHECK")
+    
+    field(CALC, "A&&(B>0.4)&&C&&(D<0.2)&&E&&((G&&(H>0.25))||I)")
 }
