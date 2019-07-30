@@ -27,6 +27,7 @@ record(calc, "$(P)REGEN:NO_RECENT_COMMS_ERROR") {
     field(INPB, "$(P)REGEN:_TEMP_COMMS_ERR_COMP.SEVR CP")
     field(CALC, "(A<3)&&(B=0)")
     field(ASG, "READONLY")
+    info(archive, "VAL")
 }
 
 #
@@ -38,6 +39,7 @@ record(calc, "$(P)REGEN:_DIFF_BETWEEN_TSET_AND_TEMP") {
     field(INPB, "$(P)TEMP:SP:RBV MS")
     field(CALC, "A-B")
     field(SCAN, "1 second")
+    info(archive, "VAL")
 }
 
 record(compress, "$(P)REGEN:_TDIFF_COARSE_BUFFER") {
@@ -53,11 +55,13 @@ record(compress, "$(P)REGEN:_TDIFF_COARSE_BUFFER_LOWEST") {
   field(ALG, "N to 1 Low Value")
   field(NSAM, "1")
   field(N, "$(HE3POT_COARSE_TIME)")
+  info(archive, "VAL")
 }
 
 record(calc, "$(P)REGEN:TEMP_COARSE_CHECK") {
     field(INPA, "$(P)REGEN:_TDIFF_COARSE_BUFFER_LOWEST CP MS")  # Lowest difference within last $(HE3POT_COARSE_TIME) secs.
     field(CALC, "A>$(HE3POT_COARSE_TEMP_DELTA)")
+    info(archive, "VAL")
 }
 
 #
@@ -100,12 +104,15 @@ record(aSub, "$(P)REGEN:_CALCULATE_TEMP_DRIFT")
     field(NOVB, "1")
     
     field(FLNK, "$(P)REGEN:TEMP_DRIFT_RATE")
+    
+    info(archive, "VALA,VALB")
 }
 
 # Calculate if the drift rate, in K/minute, is greater than the drift threshold.
 record(calc, "$(P)REGEN:TEMP_DRIFT_RATE") {
     field(INPA, "$(P)REGEN:_CALCULATE_TEMP_DRIFT.VALB")
     field(CALC, "(A*60.0) > $(DRIFT_THRESHOLD_KMIN)")
+    info(archive, "VAL")
 }
 
 #
@@ -116,22 +123,29 @@ record(scalcout, "$(P)REGEN:LOW_TEMP_MODE")
 {
     field(INAA, "$(P)STATUS CP MS")
 	field(CALC, "(AA=='Low Temp')")
+    info(archive, "VAL")
 }
 
 #
 # Overall regenerate status
 #
 
-record(calc, "$(P)REGEN:REQUIRED") {
+record(calc, "$(P)REGEN:REQUIRED:CALC") {
     field(INPA, "$(P)REGEN:LOW_TEMP_MODE CP MS")
     field(INPB, "$(P)TEMP CP MS")
     field(INPC, "$(P)HE3SORB:HEATER:AUTO CP MS")
     field(INPD, "$(P)HE3SORB:HEATER:PERCENT CP MS")
     field(INPE, "$(P)REGEN:NO_RECENT_COMMS_ERROR CP MS")
-    field(INPF, "")
     field(INPG, "$(P)REGEN:TEMP_DRIFT_RATE")
     field(INPH, "$(P)REGEN:_DIFF_BETWEEN_TSET_AND_TEMP")
     field(INPI, "$(P)REGEN:TEMP_COARSE_CHECK")
     
     field(CALC, "A&&(B>0.4)&&C&&(D<0.2)&&E&&((G&&(H>0.25))||I)")
+}
+
+record(bi, "$(P)REGEN:REQUIRED") {
+    field(INP, "$(P)REGEN:REQUIRED:CALC CP MS")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+    info(archive, "VAL")
 }
