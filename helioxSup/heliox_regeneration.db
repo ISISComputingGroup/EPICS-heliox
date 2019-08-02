@@ -1,0 +1,151 @@
+#
+# Regeneration condition: no comms error within the last 120 seconds.
+#
+
+# Holds a circular buffer of error statuses from main temperature record at 1s intervals for 120s.
+record(compress, "$(P)REGEN:_TEMP_COMMS_ERR_BUFF") {
+  field(INP, "$(P)TEMP.SEVR")
+  field(ALG, "Circular Buffer")
+  field(NSAM, "120")
+  field(SCAN, "1 second")
+}
+
+# Selects largest error status from circular buffer above.
+# If >=3, there has been a comms error in the last 120 seconds.
+# If (1|2) there has a (minor|major) alarm within last 120 seconds.
+# If 0, there have been no alarms within last 120 seconds.
+record(compress, "$(P)REGEN:_TEMP_COMMS_ERR_COMP") {
+  field(INP, "$(P)REGEN:_TEMP_COMMS_ERR_BUFF CP MS")
+  field(ALG, "N to 1 High Value")
+  field(NSAM, "1")
+  field(N, "120")
+}
+
+# True if there has been no comms error within the last 120 secs.
+record(calc, "$(P)REGEN:NO_RECENT_COMMS_ERROR") {
+    field(INPA, "$(P)REGEN:_TEMP_COMMS_ERR_COMP CP")
+    field(INPB, "$(P)REGEN:_TEMP_COMMS_ERR_COMP.SEVR CP")
+    field(CALC, "(A<3)&&(B=0)")
+    field(ASG, "READONLY")
+    info(archive, "VAL")
+}
+
+#
+# Regeneration condition: If (Heliox temperature - TSet) > $(HE3POT_COARSE_TEMP_DELTA) for $(HE3POT_COARSE_TIME) seconds.
+#
+
+record(calc, "$(P)REGEN:_DIFF_BETWEEN_TSET_AND_TEMP") {
+    field(INPA, "$(P)TEMP MS")
+    field(INPB, "$(P)TEMP:SP:RBV MS")
+    field(CALC, "A-B")
+    field(SCAN, "1 second")
+    info(archive, "VAL")
+}
+
+record(compress, "$(P)REGEN:_TDIFF_COARSE_BUFFER") {
+  field(INP, "$(P)REGEN:_DIFF_BETWEEN_TSET_AND_TEMP MS")
+  field(ALG, "Circular Buffer")
+  field(NSAM, "$(HE3POT_COARSE_TIME)")
+  field(SCAN, "1 second")
+}
+
+# Find the smallest difference between TSet and Temp in the last $(HE3POT_COARSE_TIME) seconds.
+record(compress, "$(P)REGEN:_TDIFF_COARSE_BUFFER_LOWEST") {
+  field(INP, "$(P)REGEN:_TDIFF_COARSE_BUFFER CP MS")
+  field(ALG, "N to 1 Low Value")
+  field(NSAM, "1")
+  field(N, "$(HE3POT_COARSE_TIME)")
+  info(archive, "VAL")
+}
+
+record(calc, "$(P)REGEN:TEMP_COARSE_CHECK") {
+    field(INPA, "$(P)REGEN:_TDIFF_COARSE_BUFFER_LOWEST CP MS")  # Lowest difference within last $(HE3POT_COARSE_TIME) secs.
+    field(CALC, "A>$(HE3POT_COARSE_TEMP_DELTA)")
+    info(archive, "VAL")
+}
+
+#
+# Regeneration condition: rate of change of temperature over the last $(DRIFT_BUFFER_SIZE) seconds > \$(DRIFT_THRESHOLD)
+#
+
+record(compress, "$(P)REGEN:_DRIFT_BUFFER_TEMP") {
+  field(INP, "$(P)TEMP MS")
+  field(ALG, "Circular Buffer")
+  field(NSAM, "$(DRIFT_BUFFER_SIZE)")
+  field(SCAN, "1 second")
+  field(FLNK, "$(P)REGEN:_DRIFT_BUFFER_TIME")
+}
+
+record(compress, "$(P)REGEN:_DRIFT_BUFFER_TIME") {
+  field(INP, "$(TIME)")  # Get current time whenever forward linked by record above updating with new temperature.
+  field(ALG, "Circular Buffer")
+  field(NSAM, "$(DRIFT_BUFFER_SIZE)")
+  field(FLNK, "$(P)REGEN:_CALCULATE_TEMP_DRIFT")
+}
+
+record(aSub, "$(P)REGEN:_CALCULATE_TEMP_DRIFT")
+{
+    field(SNAM, "line_of_best_fit")
+    
+    field(INPA, "$(P)REGEN:_DRIFT_BUFFER_TEMP")
+    field(FTA, "DOUBLE")
+    field(NOA, "$(DRIFT_BUFFER_SIZE)")
+    
+    field(INPB, "$(P)REGEN:_DRIFT_BUFFER_TIME")
+    field(FTB, "DOUBLE")
+    field(NOB, "$(DRIFT_BUFFER_SIZE)")
+    
+    # c0 where temp = c0 + (c1 * time)
+    field(FTVA, "DOUBLE")
+    field(NOVA, "1")
+      
+    # c1 where temp = c0 + (c1 * time). Note: units of K/second
+    field(FTVB, "DOUBLE")
+    field(NOVB, "1")
+    
+    field(FLNK, "$(P)REGEN:TEMP_DRIFT_RATE")
+    
+    info(archive, "VALA,VALB")
+}
+
+# Calculate if the drift rate, in K/minute, is greater than the drift threshold.
+record(calc, "$(P)REGEN:TEMP_DRIFT_RATE") {
+    field(INPA, "$(P)REGEN:_CALCULATE_TEMP_DRIFT.VALB")
+    field(CALC, "(A*60.0) > $(DRIFT_THRESHOLD_KMIN)")
+    info(archive, "VAL")
+}
+
+#
+# Regeneration condition: heliox status must be "Low Temp"
+#
+
+record(scalcout, "$(P)REGEN:LOW_TEMP_MODE") 
+{
+    field(INAA, "$(P)STATUS CP MS")
+	field(CALC, "(AA=='Low Temp')")
+    info(archive, "VAL")
+}
+
+#
+# Overall regenerate status
+#
+
+record(calc, "$(P)REGEN:REQUIRED:CALC") {
+    field(INPA, "$(P)REGEN:LOW_TEMP_MODE CP MS")
+    field(INPB, "$(P)TEMP CP MS")
+    field(INPC, "$(P)HE3SORB:HEATER:AUTO CP MS")
+    field(INPD, "$(P)HE3SORB:HEATER:PERCENT CP MS")
+    field(INPE, "$(P)REGEN:NO_RECENT_COMMS_ERROR CP MS")
+    field(INPG, "$(P)REGEN:TEMP_DRIFT_RATE")
+    field(INPH, "$(P)REGEN:_DIFF_BETWEEN_TSET_AND_TEMP")
+    field(INPI, "$(P)REGEN:TEMP_COARSE_CHECK")
+    
+    field(CALC, "A&&(B>0.4)&&C&&(D<0.2)&&E&&((G&&(H>0.25))||I)")
+}
+
+record(bi, "$(P)REGEN:REQUIRED") {
+    field(INP, "$(P)REGEN:REQUIRED:CALC CP MS")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+    info(archive, "VAL")
+}

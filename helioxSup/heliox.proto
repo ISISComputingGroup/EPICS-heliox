@@ -14,7 +14,7 @@ get_temp {
 
 set_temp {
     out "SET:DEV:HelioxX:HEL:SIG:TSET:%fK";
-	in "STAT:DEV:HelioxX:HEL:SIG:TSET:%*fK";
+	in "STAT:SET:DEV:HelioxX:HEL:SIG:TSET:%*fK:VALID";
 }
 
 get_temp_sp_rbv {
@@ -25,6 +25,12 @@ get_temp_sp_rbv {
 get_stability {
     out "READ:DEV:HelioxX:HEL:SIG:H3PS";
     in "STAT:DEV:HelioxX:HEL:SIG:H3PS:%[^:]";
+}
+
+# Read a string rather than an enum as we don't know the full set of statuses we might get here.
+get_status {
+    out "READ:DEV:HelioxX:HEL:SIG:STAT";
+    in "STAT:DEV:HelioxX:HEL:SIG:STAT:%#s";
 }
 
 get_chan_temp {

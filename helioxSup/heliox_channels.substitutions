@@ -1,8 +1,0 @@
-file heliox_channels.template {
-
-pattern {PORT, P, PROTO, NAME, PROTOCOL_NAME, STABILITY}
-    {"\$(PORT)", "\$(P)", "\$(PROTO)", "HE3SORB", "He3Sorb", "" }
-    {"\$(PORT)", "\$(P)", "\$(PROTO)", "HE4POT" , "He4Pot",  "" }
-    {"\$(PORT)", "\$(P)", "\$(PROTO)", "HELOW"  , "HeLow",   "#"}
-    {"\$(PORT)", "\$(P)", "\$(PROTO)", "HEHIGH" , "HeHigh",  "#"}
-}
